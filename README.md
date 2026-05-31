@@ -1,12 +1,22 @@
 # iCloud Photo Cleanup
 
-Two-script tool to bulk-clean your iCloud Photos library on macOS — removes screenshots, exact duplicates, and low-quality/blurry shots using Apple's own metadata.
+**Just run the two commands below — that's it.**
 
-**No third-party tools required.** Uses Python's built-in `sqlite3` to read the Photos database, and the native `PHPhotoLibrary` framework to delete safely.
+```bash
+python3 analyze.py
+```
+This scans your Photos library and shows you exactly what would be deleted (screenshots, duplicates, low-quality shots). Nothing is touched yet.
+
+```bash
+swift cleanup.swift
+```
+This moves everything to **Recently Deleted**. Nothing is permanently gone — you have a 30-day window to review and recover anything before it's truly deleted.
+
+> **Favorites are excluded by default.** Any photo you've hearted in Photos is safe unless you explicitly change that setting.
 
 ---
 
-## What it removes
+## What gets removed
 
 | Category | How it's detected |
 |---|---|
@@ -14,11 +24,9 @@ Two-script tool to bulk-clean your iCloud Photos library on macOS — removes sc
 | **Duplicates** | `ZDUPLICATEASSETVISIBILITYSTATE = 2` (Photos' built-in duplicate detection, keeps the better copy) |
 | **Low quality** | `ZOVERALLAESTHETICSCORE < 0.32` (Apple's aesthetic scoring, 0–1 scale) |
 
-Everything goes to **Recently Deleted** first — nothing is permanently gone until you empty that album. You have a 30-day recovery window.
-
 ---
 
-## Usage
+## Step-by-step
 
 ### Step 1 — Analyze
 
@@ -72,7 +80,7 @@ Edit the top of `analyze.py` to tune the aggressiveness:
 QUALITY_THRESHOLD = 0.32   # 0.2 = conservative, 0.32 = recommended, 0.4 = aggressive
 
 # Include favorited photos in the low-quality sweep?
-INCLUDE_FAVORITES = True
+INCLUDE_FAVORITES = False  # default: favorites are protected
 ```
 
 ---
