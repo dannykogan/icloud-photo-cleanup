@@ -23,7 +23,7 @@ DB_PATH = os.path.join(LIBRARY_PATH, "database/Photos.sqlite")
 QUALITY_THRESHOLD = 0.32
 
 # Set to True to also include favorited low-quality photos
-INCLUDE_FAVORITES = True
+INCLUDE_FAVORITES = False
 # ─────────────────────────────────────────────────────────────────────────────
 
 def ts(val):
