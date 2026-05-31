@@ -108,6 +108,6 @@ The key tables/columns used:
 ## Safety notes
 
 - **Non-destructive first pass:** everything goes to Recently Deleted, not permanent deletion
-- **Favorites are included by default** at score < 0.32 — set `INCLUDE_FAVORITES = False` to skip them
+- **Favorites are excluded by default** — set `INCLUDE_FAVORITES = True` in `analyze.py` to include them
 - **Videos are excluded** from the quality sweep (only photos are scored)
 - The SQLite database is opened read-only by `analyze.py` — it never writes to the DB
